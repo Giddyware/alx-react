@@ -1,33 +1,13 @@
-# task_0
+# 0x01-react_intro
 
-* Create a basic app named dashboard using create-react-app
+## Learning Objectives
+- How to create a basic Javascript application using React
+- How to use the package create-react-app to start developing quickly with React
+- What JSX is and how to use it
+- How to use the React Developer Tools to debug your code
+- How to use Enzyme’s Shadow rendering to test your application
+- How to use React with Webpack & Babel
 
-# task_1
 
-* Embedding expressions, functions 
-
-# task_2
-
-* Modify the Notifications 
-
-# task_3
-
-* Creating React tests 
-
-* Install Enzyme with npm
-
-* test to check that the function getFullYear
-
-# task_4
-
-* Deploy your application to GitHub Pages using gh-pages branch
-
-# task_5
-
-* Installing Jest and Enzyme
-
-* Reorganize the files 
-
-* Install Babel
-
-* Creating a project using Webpack 
+## Resources
+- [react documentation](https://reactjs.org/)
