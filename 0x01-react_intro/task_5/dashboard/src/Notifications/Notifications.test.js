@@ -1,26 +1,31 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Notifications from './Notifications';
 
-describe("Testing the <Notifications /> Component", () => {
-  
-  let wrapper;
+describe('Notification tests', () => {
+	it('renders Notification component without crashing', () => {
+		const component = shallow(<Notifications />);
 
-  beforeEach(() => {
-    wrapper = shallow(<Notifications />);
-  });
+		expect(component).toBeDefined();
+	});
 
-  it("<Notifications /> is rendered without crashing", () => {
-    expect(wrapper).to.not.be.an('undefined');
-  });
+	it('renders ul', () => {
+		const component = shallow(<Notifications />);
 
-  it("<Notifications /> renders three list items", () => {
-    expect(wrapper.find('li')).to.have.lengthOf(3);
-  });
+		expect(component.find('ul')).toBeDefined();
+	});
 
-  it("<Notifications /> render the text 'Here is the list of notifications'", () => {
-    expect(wrapper.contains(<p>Here is the list of notifications</p>)).to.equal(true);
-  });
+	it('renders three list items', () => {
+		const component = shallow(<Notifications />);
 
+		expect(component.find('li')).toHaveLength(3);
+	});
+
+	it('renders correct text', () => {
+		const component = shallow(<Notifications />);
+
+		expect(component.find('p').prop('children')).toBe(
+			'Here is the list of notifications'
+		);
+	});
 });

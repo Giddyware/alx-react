@@ -1,9 +1,9 @@
+import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 
-describe('Test App.js', () => {
-  it('App without crashing', (done) => {
-    expect(shallow(<App />).exists());
-    done();
-  });
+const wrapper = shallow(<App />);
+
+it('renders without crashing', () => {
+  shallow(<App />);
 });
