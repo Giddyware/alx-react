@@ -1,7 +1,6 @@
-/* modify the function getImmutableObject using Map from Immutable.js */
-
-import { Map } from 'immutable';
+import { Map } from "./node_modules/immutable/dist/immutable";
 
 export default function getImmutableObject(object) {
   return Map(object);
 }
+

@@ -1,25 +1,23 @@
-import { Seq } from "immutable";
+import { Seq } from "./node_modules/immutable/dist/immutable";
 
 export default function printBestStudents(object) {
-  const seq = Seq(object);
+	const sq = Seq(object);
 
-  //   console.log(seq);
-  const filtered = seq.filter((student) => {
-    student.firstName.charAt(0).toUpperCase();
-    return student.score > 70;
-  });
+	const fltr = sq.filter((student) => {
+		student.firstName.charAt(0).toUpperCase();
+		return student.score > 70;
+	});
 
-  function capFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+	const capFirstChar = (str) => {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	};
 
-  const JSObject = filtered.toJS();
+	const JSObject = fltr.toJS();
 
-  Object.keys(JSObject).map((key) => {
-    JSObject[key].firstName = capFirstLetter(JSObject[key].firstName);
-    JSObject[key].lastName = capFirstLetter(JSObject[key].lastName);
-    return JSObject[key];
-  });
+	Object.keys(JSObject).map((key) => {
+		JSObject[key].firstName = capFirstChar(JSObject[key].firstName);
+		JSObject[key].lastName = capFirstChar(JSObject[key].lastName);
+	});
 
-  console.log(JSObject);
+	console.log(JSObject);
 }
