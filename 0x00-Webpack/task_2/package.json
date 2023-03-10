@@ -8,8 +8,8 @@
     "build": "webpack"
   },
   "keywords": [],
-  "author": "Lothric",
-  "license": "ISC",
+  "author": "UWABOR COLLINS",
+  "license": "UWABOR",
   "dependencies": {
     "jquery": "^3.6.0",
     "lodash": "^4.17.21"
