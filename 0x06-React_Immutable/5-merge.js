@@ -1,16 +1,15 @@
-import { List } from "./node_modules/immutable/dist/immutable";
-import { Map } from "./node_modules/immutable/dist/immutable";
+import { Map, List } from 'immutable';
 
-export default function concatElements(page1, page2) {
-	const ls1 = List(page1);
-	const ls2 = List(page2);
+export function concatElements(page1, page2) {
+  const list1 = List(page1);
+  const list2 = List(page2);
 
-	return ls1.concat(ls2);
+  return list1.concat(list2);
 }
 
-export default function mergeElements(page1, page2) {
-	const mp1 = Map(page1);
-	const mp2 = Map(page2);
+export function mergeElements(page1, page2) {
+  const map1 = Map(page1);
+  const map2 = Map(page2);
 
-	return mp1.merge(mp2);
+  return map1.merge(map2);
 }
