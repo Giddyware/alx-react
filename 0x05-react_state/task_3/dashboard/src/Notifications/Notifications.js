@@ -8,6 +8,11 @@ import { StyleSheet, css } from 'aphrodite';
 class Notifications extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
+  }
+
+  markNotificationAsRead(id) {
+    console.log(`Notification ${id} has been marked as read`);
   }
 
   render() {
@@ -40,6 +45,7 @@ class Notifications extends React.PureComponent {
             >
               <img src={closeIcon} alt="close icon" width="15px" />
             </button>
+            
             {
               this.props.listNotifications.length != 0 ?
                 <p>Here is the list of notifications</p>
@@ -58,12 +64,13 @@ class Notifications extends React.PureComponent {
                   value={val.value}
                   html={val.html}
                   key={val.id}
-                  markAsRead={this.props.markNotificationAsRead}
+                  markNotificationAsRead={this.markNotificationAsRead}
                   id={val.id}
                 />
                 })
               }
             </ul>
+
           </div>
         }
         
@@ -89,10 +96,9 @@ const notificationStyles = StyleSheet.create({
     border: '3px dotted var(--holberton-red)',
     padding: '6px 12px',
     position: 'absolute',
-    top: '21px',
+    top: '15px',
     right: '7px',
-    marginTop: '12px',
-    zIndex: '100',
+    width: '40%',
     '@media (max-width: 900px)': {
       width: '100%',
       padding: '0px',
@@ -105,7 +111,6 @@ const notificationStyles = StyleSheet.create({
 	},
   menuItem: {
     position: 'relative',
-    zIndex: 100,
     float: 'right',
     backgroundColor: '#fff8f8',
     ':hover': {

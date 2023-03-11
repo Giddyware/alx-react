@@ -1,45 +1,57 @@
-import React from "react";
-import { StyleSheet, css } from "aphrodite";
+import React from 'react';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-function Login() {
-  return (
-    <div className={css(styles.login)}>
-      <p>Login to access the full dashboard</p>
-      <label htmlFor="email">Email:</label>
-      <input type="email" id="email" className={css(styles.loginInput)} />
-      <label htmlFor="password">Password:</label>
-      <input type="password" id="password" className={css(styles.loginInput)} />
-      <button>OK</button>
-    </div>
-  );
+export default function Login() {
+    return (
+        <div className={css(styles.AppBody)}>
+            <p>
+                Login to access the full dashboard
+            </p>
+            <form className={css(styles.AppBodyForm, styles.small)}>
+                <div>
+                    <label htmlFor="email" className={css(styles.AppBodyLabel)}>
+                        Email
+                    </label>
+                    <input type="email" name="email" className={css(styles.AppBodyInput)}/>
+                </div>
+                <div>
+                    <label htmlFor="password" className={css(styles.AppBodyLabel)}>
+                        Password
+                    </label>
+                    <input type="password" name="password" className={css(styles.AppBodyInput)}/>
+                </div>
+                <button type="submit" className={css(styles.AppBodyButton)}>OK</button>
+            </form>
+        </div>
+    )
 }
 
-const screenSize = {
-  small: "@media screen and (max-width: 900px)",
-};
-
 const styles = StyleSheet.create({
-  login: {
-    margin: "50px",
-    flexGrow: 1,
-    [screenSize.small]: {
-      marginTop: "10px",
-      marginLeft: 0,
-      marginRight: 0,
-      marginBottom: 0,
+    AppBody: {
+        padding: '36px 24px'
     },
-  },
-
-  loginInput: {
-    marginLeft: "10px",
-    marginRight: "20px",
-    [screenSize.small]: {
-      display: "block",
-      marginLeft: 0,
-      marginTop: "10px",
-      marginBottom: "10px",
+    AppBodyInput: {
+        padding: '0 16px 0 8px',
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px'
     },
-  },
-});
-
-export default Login;
+    AppBodyLabel: {
+        marginRight: '5px'
+    },
+    AppBodyForm: {
+        display: 'flex',
+        gap: '1rem'
+    },
+    AppBodyButton: {
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px',
+        background: 'transparent',
+        width: 50
+    },
+    small: {
+        '@media (max-width: 900px)': {
+            display: 'flex',
+            flexDirection: 'column',
+        }
+    }
+})

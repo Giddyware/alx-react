@@ -1,61 +1,97 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import React from 'react';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [enableSubmit, setEnableSubmit] = useState(false);
-  const handleLoginSubmit = (e) => {
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      email: '',
+      password: '',
+      enableSubmit: false,
+    }
+  }
+
+  handleLoginSubmit = (e) => {
     e.preventDefault();
-    setIsLoggedIn(true);
-  };
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
+    this.setState({ isLoggedIn: true });
   };
 
-  useEffect(() => {
-    if (email != '' && password != '') {
-      setEnableSubmit(true);
-    } else {
-      if (enableSubmit != false) {
-        setEnableSubmit(false);
+  handleChangeEmail = (e) => {
+    this.setState({ email: e.target.value });
+  };
+
+  handleChangePassword = (e) => {
+    this.setState({ password: e.target.value });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.email !== prevState.email || this.state.password !== prevState.password) {
+      if (this.state.email !== '' && this.state.password !== '') {
+        this.setState({ enableSubmit: true });
+      } else {
+        if (this.state.enableSubmit !== false) {
+          this.setState({ enableSubmit: false });
+        }
       }
     }
-  }, [email, password]);
+  }
 
-  return (
-    <React.Fragment>
-      <div className={css(loginStyles.appBody)}>
-        <p>Login to access the full dashboard</p>
-        <form onSubmit={handleLoginSubmit} >
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" className={loginStyles.inputs} value={email} onChange={handleChangeEmail} />
-          <label htmlFor="password">Password: </label>
-          <input type="password" id="password" name="password" className={loginStyles.inputs} value={password} onChange={handleChangePassword} />
-          <input type="submit" value="Ok" disabled={!enableSubmit}/>
+  render() {
+    return (
+      <div className={css(styles.AppBody)}>
+        <p>
+            Login to access the full dashboard
+        </p>
+        <form className={css(styles.AppBodyForm, styles.small)} onSubmit={this.handleLoginSubmit}>
+            <div>
+                <label htmlFor="email" className={css(styles.AppBodyLabel)}>
+                    Email
+                </label>
+                <input type="email" name="email" className={css(styles.AppBodyInput)} value={this.state.email} onChange={this.handleChangeEmail}/>
+            </div>
+            <div>
+                <label htmlFor="password" className={css(styles.AppBodyLabel)}>
+                    Password
+                </label>
+                <input type="password" name="password" className={css(styles.AppBodyInput)} value={this.state.password} onChange={this.handleChangePassword}/>
+            </div>
+            <input type="submit" className={css(styles.AppBodyButton)} value="OK" disabled={this.state.enableSubmit}/>
         </form>
       </div>
-    </React.Fragment>
-  )
+    );
+  }
 }
 
-const loginStyles = StyleSheet.create({
-	appBody: {
-    padding: '36px 24px',
-		'@media (max-width: 900px)': {
-      display: 'flex',
-      flexDirection: 'column'
+
+const styles = StyleSheet.create({
+    AppBody: {
+        padding: '36px 24px'
+    },
+    AppBodyInput: {
+        padding: '0 16px 0 8px',
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px'
+    },
+    AppBodyLabel: {
+        marginRight: '5px'
+    },
+    AppBodyForm: {
+        display: 'flex',
+        gap: '1rem'
+    },
+    AppBodyButton: {
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px',
+        background: 'transparent',
+        width: 50
+    },
+    small: {
+        '@media (max-width: 900px)': {
+            display: 'flex',
+            flexDirection: 'column',
+        }
     }
-	},
-
-	inputs: {
-		margin: '0 16px 0 8px'
-	}
 })
-
 
 export default Login;

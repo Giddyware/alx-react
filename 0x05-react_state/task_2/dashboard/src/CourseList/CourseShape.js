@@ -1,8 +1,14 @@
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
+import React from 'react';
 
-export default PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  credit: PropTypes.number.isRequired
+function CourseShape(id, name, credit) {
+
 }
-);
+
+CourseShape.propTypes = {
+    id: propTypes.number.isRequired,
+    name: propTypes.string.isRequired,
+    credit: propTypes.number.isRequired,
+}
+
+export default CourseShape;
