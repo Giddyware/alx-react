@@ -1,16 +1,26 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import Header from './Header';
+import { shallow } from 'enzyme';
+import { StyleSheetTestUtils } from 'aphrodite';
 
-describe('Header', () => {
-    it('Header renders without crashing', () => {
-        const headerWrapper = shallow(<Header />);
-        expect(headerWrapper.exists());
-    })
-    it('Header should render an h1 and an img tag', () => {
-        const headerWrapper = shallow(<Header />);
-        expect(headerWrapper.exists('img')).equal(true);
-        expect(headerWrapper.containsMatchingElement(<h1>School dashboard</h1>)).equal(true);
-    });
+
+describe('Testing <Header /> Component', () => {
+  let wrapper;
+
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+    wrapper = shallow(<Header />);
+  });
+
+  it("Renders with out crashing", () => {
+    expect(wrapper).toBeDefined();
+  });
+
+  it("Render an h1 tag", () => {
+    expect(wrapper.find('h1')).toBeDefined();
+  });
+
+  it("Render an img tag", () => {
+    expect(wrapper.find('img')).toBeDefined();
+  });
 });

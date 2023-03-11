@@ -1,14 +1,9 @@
-import propTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
 
-function CourseShape(id, name, credit) {
-
-}
-
-CourseShape.propTypes = {
-    id: propTypes.number.isRequired,
-    name: propTypes.string.isRequired,
-    credit: propTypes.number.isRequired,
-}
+const CourseShape = PropTypes.shape({
+  id: PropTypes.number,
+  name: PropTypes.string,
+  credit: PropTypes.number,
+});
 
 export default CourseShape;

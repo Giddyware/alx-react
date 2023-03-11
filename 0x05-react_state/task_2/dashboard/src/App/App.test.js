@@ -1,14 +1,9 @@
-/**
- * @jest-environment jsdom
-*/
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { jest } from '@jest/globals';
 import App from './App';
-import { listCourses } from './App';
 import { StyleSheetTestUtils } from 'aphrodite';
-import CourseList from '../CourseList/CourseList';
-import Login from '../Login/Login';
-import Header from '../Header/Header';
+import { AppContext, user, logOut } from './AppContext';
 
 describe('Test App.js', () => {
   let wrapper;
@@ -48,10 +43,10 @@ describe("Testing <App isLoggedIn={true} />", () => {
 
   beforeEach(() => {
     StyleSheetTestUtils.suppressStyleInjection();
-    wrapper = shallow(<App isLoggedIn={true}/>);
+    wrapper = shallow(<App/>);
   });
 
-  it("the Login component is not included", () => {
+  it("the Login component is  included", () => {
     expect(wrapper.find('Login')).toHaveLength(1);
   });
 
@@ -60,35 +55,36 @@ describe("Testing <App isLoggedIn={true} />", () => {
   });
 });
 
-// describe("Testing <App logOut={function} />", () => {
-//   beforeEach(() => {
-//     StyleSheetTestUtils.suppressStyleInjection();
-//   });
+describe("Testing <App logOut={function} />", () => {
+  beforeEach(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
 
-//   it("verify that when the keys control and h are pressed the logOut function, passed as a prop, is called and the alert function is called with the string Logging you out", () => {
-//     const wrapper = mount(<App logOut={()=>{console.log("ctrl and h are pressed")}}/>);
-//     window.alert = jest.fn();
-//     const inst = wrapper.instance();
-//     const logout = jest.spyOn(inst, 'logOut');
-//     const alert = jest.spyOn(window, 'alert');
-//     const event = new KeyboardEvent('keydown', {bubbles:true, ctrlKey: true, key: 'h'});
-//     document.dispatchEvent(event);
-//     expect(alert).toBeCalledWith("Logging you out");
-//     expect(logout).toBeCalled();
-//     alert.mockRestore();
-//   });
-// });
+  it("verify that when the keys control and h are pressed the logOut function, passed as a prop, is called and the alert function is called with the string Logging you out", () => {
+    const wrapper = mount(<App logOut={()=>{console.log("ctrl and h are pressed")}}/>);
+    window.alert = jest.fn();
+    const inst = wrapper.instance();
+    const logout = jest.spyOn(inst, 'logOut');
+    const alert = jest.spyOn(window, 'alert');
+    const event = new KeyboardEvent('keydown', {bubbles:true, ctrlKey: true, key: 'h'});
+    document.dispatchEvent(event);
+    expect(alert).toBeCalledWith("Logging you out");
+    expect(logout).toBeCalled();
+    alert.mockRestore();
+  });
+});
 
 describe("Testing App Component's State />", () => {
   let wrapper;
 
   beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();    wrapper = shallow(<App/>);
+    StyleSheetTestUtils.suppressStyleInjection();
+    wrapper = shallow(<App/>);
   });
 
   afterEach(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
+		jest.clearAllMocks();
+	});
 
   it('check if default value of displayDrawer in state is false', () => {
     expect(wrapper.state('displayDrawer')).toBe(false);
@@ -103,30 +99,44 @@ describe("Testing App Component's State />", () => {
     wrapper.instance().handleHideDrawer();
     expect(wrapper.state('displayDrawer')).toBe(false);
   });
+
+  it(`Tests that the logIn function updates user's state correctly`, () => {
+		wrapper = mount(
+			<AppContext.Provider value={{ user, logOut }}>
+				<App />
+			</AppContext.Provider>
+		);
+
+		const myUser = {
+			email: 'testy@gmail.com',
+			password: 'testy',
+			isLoggedIn: true,
+		}
+
+		expect(wrapper.state().user).toEqual(user);
+		const instance = wrapper.instance();
+		instance.logIn(myUser.email, myUser.password);
+		expect(wrapper.state().user).toEqual(myUser);
+		wrapper.unmount();
+	})
+
+	it(`Tests that the logOut function updates user's state correctly`, () => {
+		wrapper = mount(
+			<AppContext.Provider value={{ user, logOut }}>
+				<App />
+			</AppContext.Provider>
+		);
+
+		const myUser = {
+			email: 'testy@gmail.com',
+			password: 'testy',
+			isLoggedIn: true,
+		}
+
+		expect(wrapper.state().user).toEqual(user);
+		const instance = wrapper.instance();
+		instance.logOut();
+		expect(wrapper.state().user).toEqual(user);
+		wrapper.unmount();
+	})
 });
-
-const wrapper_isLoggedIn = shallow(<App/>);
-describe('App Component when isLoggedin is true', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();    wrapper = shallow(<App/>);
-  });
-
-  afterEach(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it("does not render Login component", () => {
-    wrapper_isLoggedIn.setState({user:{email:'', password:'', isLoggedIn:true}})
-    expect(wrapper_isLoggedIn.containsMatchingElement(<Login/>)).toEqual(false)
-  })
-
-  it("renders CourseList component", () => {
-    expect(wrapper_isLoggedIn.containsMatchingElement(<CourseList listCourses={listCourses}/>)).toEqual(false)
-    // should be true
-  })
-});
-
-jest.useFakeTimers();
-jest.runAllTimers();

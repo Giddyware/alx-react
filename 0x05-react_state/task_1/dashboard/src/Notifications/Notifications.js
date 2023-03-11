@@ -141,8 +141,8 @@ const notificationStyles = StyleSheet.create({
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
-  handleHideDrawer: () => {},
-  handleDisplayDrawer: () => {}
+  handleHideDrawer: () => {console.log('empty func');},
+  handleDisplayDrawer: () => {console.log('empty func');}
 };
 
 Notifications.propTypes = {

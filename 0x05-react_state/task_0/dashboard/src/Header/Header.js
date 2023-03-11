@@ -1,27 +1,31 @@
-import React from 'react';
-import holbertonLogo from '../assets/holberton_logo.jpg';
-import { StyleSheet, css } from 'aphrodite/no-important';
+import React from "react";
+import holberton_logo from "../assets/holberton_logo.jpg";
+import { StyleSheet, css } from "aphrodite";
 
-export default function Header() {
-    return (
-        <header className={css(styles.AppHeader)}>
-            <img src={holbertonLogo} alt="holberton-logo" className={css(styles.AppHeaderImg)}></img>
-            <h1 className={css(styles.AppHeaderH1)}>School dashboard</h1>
-        </header>
-    );
+function Header() {
+  return (
+    <div className={css(styles.header)}>
+      <img src={holberton_logo} className={css(styles.headerImg)} />
+      <h1>School dashboard</h1>
+    </div>
+  );
 }
 
+const cssVars = {
+  mainColor: "#e01d3f",
+};
+
 const styles = StyleSheet.create({
-    AppHeader: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'left',
-        borderBottom: '3px solid #e1484c'
-    },
-    AppHeaderImg: {
-        width: 150
-    },
-    AppHeaderH1: {
-        color: '#e1484c'
-    }
-})
+  header: {
+    display: "flex",
+    alignItems: "center",
+    color: cssVars.mainColor,
+    fontSize: "20px",
+  },
+
+  headerImg: {
+    width: "200px",
+  },
+});
+
+export default Header;

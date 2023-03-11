@@ -50,7 +50,6 @@ class Notifications extends React.Component {
             >
               <img src={closeIcon} alt="close icon" width="15px" />
             </button>
-            
             {
               this.props.listNotifications.length != 0 ?
                 <p>Here is the list of notifications</p>
@@ -75,7 +74,6 @@ class Notifications extends React.Component {
                 })
               }
             </ul>
-
           </div>
         }
         
@@ -101,9 +99,10 @@ const notificationStyles = StyleSheet.create({
     border: '3px dotted var(--holberton-red)',
     padding: '6px 12px',
     position: 'absolute',
-    top: '15px',
+    top: '21px',
     right: '7px',
-    width: '40%',
+    marginTop: '12px',
+    zIndex: '100',
     '@media (max-width: 900px)': {
       width: '100%',
       padding: '0px',
@@ -116,6 +115,7 @@ const notificationStyles = StyleSheet.create({
 	},
   menuItem: {
     position: 'relative',
+    zIndex: 100,
     float: 'right',
     backgroundColor: '#fff8f8',
     ':hover': {
@@ -141,8 +141,8 @@ const notificationStyles = StyleSheet.create({
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
-  handleHideDrawer: () => {},
-  handleDisplayDrawer: () => {}
+  handleHideDrawer: () => {console.log('empty func');},
+  handleDisplayDrawer: () => {console.log('empty func');}
 };
 
 Notifications.propTypes = {
