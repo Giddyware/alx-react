@@ -1,19 +1,17 @@
-:root {
-    --holberton-red: #e1484c;
-}
+.App-header h1{
+    color: red;
+    float: right;
+    padding-right: 800px;
+  }
 
-.App-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    border-bottom: 3px solid var(--holberton-red);
-}
+  .App-logo {
+    height: 20vmin;
+    pointer-events: none;
+  }
 
-.App-header img {
-    width: 150px;
-}
-
-.App-header h1 {
-    margin: auto auto auto 0;
-    color: var(--holberton-red);
-}
+  .App-header {
+    /* display: flex; */
+    padding: 1em;
+    /* height: 300px; */
+  }
+  

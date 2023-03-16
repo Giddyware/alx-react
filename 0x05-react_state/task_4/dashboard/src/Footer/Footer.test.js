@@ -1,27 +1,27 @@
-import React from 'react';
+import React from "react";
 import { shallow, mount } from 'enzyme';
+import {StyleSheetTestUtils} from 'aphrodite';
 import Footer from './Footer';
-import { StyleSheetTestUtils } from 'aphrodite';
-import {AppContext} from '../App/AppContext';
+import { AppContext } from "../App/AppContext";
 
-describe("Testing <Footer /> component", () => {
-  let wrapper;
+describe('Footer Component', () => {
 
-  beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-    wrapper = shallow(<Footer />);
-  });
+    let wrapper;
+    beforeEach(() => {
+        StyleSheetTestUtils.suppressStyleInjection();
+        wrapper = shallow(<Footer />);
+    });
 
-  it("Footer Component renders without crashing", () => {
-    expect(wrapper.exists());
-  });
+    it("Renders without crashing", ()=> {
+        expect(wrapper).exists();
+    });
 
-  it("Footer compoenent render at the very least the text “Copyright”", () => {
-    expect(wrapper.find("Copyright").at(0)).toBeDefined();
-  });
+    it("Renders text Copyright", ()=> {
+        expect(wrapper.find('Copyright')).at(0).toBeDefined();
+    });
 });
 
-describe('Testing Footer Component context and state', () => {
+describe('Testing Footer context and state', () => {
 	beforeEach(() => {
 		StyleSheetTestUtils.suppressStyleInjection();
 	});
@@ -73,4 +73,4 @@ describe('Testing Footer Component context and state', () => {
 
 		wrapper.unmount();
 	})
-})
+});

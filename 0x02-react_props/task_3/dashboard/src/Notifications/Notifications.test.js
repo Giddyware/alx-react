@@ -1,29 +1,31 @@
-import React from 'react';
+import React from "react";
 import { shallow } from 'enzyme';
 import Notifications from './Notifications';
 
-describe("Testing the <Notifications /> Component", () => {
-  
-  let wrapper;
 
-  beforeEach(() => {
-    wrapper = shallow(<Notifications />);
-  });
 
-  it("<Notifications /> is rendered without crashing", () => {
-    expect(wrapper).toBeDefined();
-  });
+describe('Notification Component', () => {
 
-  it("<Notifications /> renders NotificationItems", () => {
-    expect(wrapper.find('NotificationItem')).toHaveLength(3);
-  });
+    beforeEach(() => {
+        wrapper = shallow(<Notifications />)
+    })
 
-  it("<Notifications /> render the text 'Here is the list of notifications'", () => {
-    expect(wrapper.contains(<p>Here is the list of notifications</p>)).toEqual(true);
-  });
+    it('renders without crashing', () => {
+        const notifications = shallow(<Notifications />);
+        expect(notifications).toBeDefined();
+    });
 
-  it("verify that the first NotificationItem element renders the right html", () => {
-    expect(wrapper.find("NotificationItem").first().html()).toEqual('<li data-notification-type="default">New course available</li>');
-  });
+    it('renders three list items', () => {
+        const notifications = shallow(<Notifications />);
+        expect(notifications.find('NotificationItem')).to.have.lengthOf(3);
+    });
 
-});
+    it('renders text', () => {
+        const notifications = shallow(<Notifications />);
+        expect(notifications). find('Here is the list of notifications').toBeDefined();
+    });
+
+    it('verifies the first NotificationItem element renders the correct html', () => {
+        expect(wrapper.find("NotificationItem").first().html().toEqual('<li ata-notification-type="default">New course available</li>'))
+    });
+})

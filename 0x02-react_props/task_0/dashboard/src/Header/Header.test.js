@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 import { shallow } from 'enzyme';
-import Header from './Header';
+import App from './App';
 
-const wrapper = shallow(<Header />);
+describe('App Component', () => {
 
-it('renders without crashing', () => {
-  shallow(<Header />);
-});
-
-it('renders header', () => {
-  expect(wrapper.find('header.header').exists()).toEqual(true);
-});
+    it('renders a div with class name App-header', () => {
+        const app = shallow(<App />);
+        expect(app.find('.App-header')).toBeDefined();
+    });
+})

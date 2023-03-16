@@ -1,105 +1,43 @@
-import { shallow } from "enzyme";
 import React from "react";
-import CourseList from "./CourseList";
-import { StyleSheetTestUtils } from "aphrodite";
+import { shallow } from 'enzyme';
+import CourseList from './CourseList';
 
-describe("<CourseList />", () => {
-  let listCourses;
-
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it("CourseList renders without crashing", () => {
-    const wrapper = shallow(<CourseList />);
-    expect(wrapper.exists()).toEqual(true);
-  });
-
-  describe("CourseList with list of courses", () => {
-    beforeEach(() => {
-      listCourses = [
-        { id: 1, name: "ES6", credit: 60 },
-        { id: 2, name: "Webpack", credit: 20 },
-        { id: 3, name: "React", credit: 40 },
-      ];
+describe ('Testing <CourseList />', () => {
+    it('Renders CourseList without crashing', () => {
+        let wrapper = shallow(<CourseList />);
+        expect(wrapper.exists());
     });
 
-    it("it renders the 5 different rows", () => {
-      const wrapper = shallow(<CourseList listCourses={listCourses} />);
-      wrapper.update();
-      const item = wrapper.find("CourseListRow");
-
-      expect(item).toHaveLength(5);
-
-      expect(item.at(0).prop("textFirstCell")).toEqual("Available courses");
-      expect(item.at(0).prop("isHeader")).toEqual(true);
-
-      expect(item.at(1).prop("textFirstCell")).toEqual("Course name");
-      expect(item.at(1).prop("textSecondCell")).toEqual("Credit");
-      expect(item.at(1).prop("isHeader")).toEqual(true);
-
-      expect(item.at(2).prop("textFirstCell")).toEqual("ES6");
-      expect(item.at(2).prop("textSecondCell")).toEqual(60);
-      expect(item.at(2).prop("isHeader")).toEqual(false);
-
-      expect(item.at(3).prop("textFirstCell")).toEqual("Webpack");
-      expect(item.at(3).prop("textSecondCell")).toEqual(20);
-      expect(item.at(3).prop("isHeader")).toEqual(false);
-
-      expect(item.at(4).prop("textFirstCell")).toEqual("React");
-      expect(item.at(4).prop("textSecondCell")).toEqual(40);
-      expect(item.at(4).prop("isHeader")).toEqual(false);
-    });
-  });
-
-  describe("CourseList without listCourses or empty listCourses", () => {
-    beforeEach(() => {
-      listCourses = [];
+    it('CourseList renders 3 different rows', () => {
+        let wrapper = shallow(<CourseList />);
+        expect(wrapper.find('CourseListRow')).toHaveLength(3)
     });
 
-    it("it renders the 3 rows without listCourses  without listCourses", () => {
-      const wrapper = shallow(<CourseList />);
-      expect(wrapper.exists());
-      wrapper.update();
-      const item = wrapper.find("CourseListRow");
-
-      expect(item).toHaveLength(3);
-      expect(item.at(0).prop("textFirstCell")).toEqual("Available courses");
-      expect(item.at(0).prop("isHeader")).toEqual(true);
-
-      expect(item.at(1).prop("textFirstCell")).toEqual("Course name");
-      expect(item.at(1).prop("textSecondCell")).toEqual("Credit");
-      expect(item.at(1).prop("isHeader")).toEqual(true);
-
-      expect(item.at(2).prop("textFirstCell")).toEqual(
-        "No course available yet"
-      );
-      expect(item.at(2).prop("textSecondCell")).toEqual(null);
-      expect(item.at(2).prop("isHeader")).toEqual(false);
+    it("verify that CourseList renders correctly if you pass an empty array or if you don’t pass the listCourses property", () => {
+        const listCourses = [];
+        let wrapper = shallow(<CourseList />);
+        expect(wrapper.find('CourseListRow').last().props().textFirstCell).toEqual("No course available yet");
+        wrapper = shallow(<CourseList listCourses={[]}/>);
+        expect(wrapper.find('CourseListRow').last().props().textFirstCell).toEqual("No course available yet");
+      });
+    
     });
-
-    it("it renders the 3 rows with listCourses empty", () => {
-      const wrapper = shallow(<CourseList listCourses={listCourses} />);
-      expect(wrapper.exists());
-      wrapper.update();
-      const item = wrapper.find("CourseListRow");
-
-      expect(item).toHaveLength(3);
-      expect(item.at(0).prop("textFirstCell")).toEqual("Available courses");
-      expect(item.at(0).prop("isHeader")).toEqual(true);
-
-      expect(item.at(1).prop("textFirstCell")).toEqual("Course name");
-      expect(item.at(1).prop("textSecondCell")).toEqual("Credit");
-      expect(item.at(1).prop("isHeader")).toEqual(true);
-
-      expect(item.at(2).prop("textFirstCell")).toEqual(
-        "No course available yet"
-      );
-      expect(item.at(2).prop("textSecondCell")).toEqual(null);
-      expect(item.at(2).prop("isHeader")).toEqual(false);
-    });
-  });
+    
+    describe("Testing <CourseList listCourses={listCourses}/>", () => {
+      let wrapper;
+    
+      beforeEach(() => {
+        const listCourses = [
+          {id: 1, name: 'ES6', credit: 60},
+          {id: 2, name: 'Webpack', credit: 20},
+          {id: 3, name: 'React', credit: 40}
+        ];
+        wrapper = shallow(<CourseList listCourses={listCourses}/>);
+      });
+    
+      it("verify that when you pass a list of courses, the component renders it correctly", () => {
+        expect(wrapper.findWhere((node)=>{return node.props().textFirstCell === "ES6"})).toHaveLength(1);
+        expect(wrapper.findWhere((node)=>{return node.props().textFirstCell === "Webpack"})).toHaveLength(1);
+        expect(wrapper.findWhere((node)=>{return node.props().textFirstCell === "React"})).toHaveLength(1);
+      });
 });

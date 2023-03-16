@@ -1,61 +1,57 @@
-import { shallow } from "enzyme";
 import React from "react";
-import NotificationItem from "./NotificationItem";
-import { StyleSheetTestUtils } from "aphrodite";
+import { shallow } from 'enzyme';
+import NotificationItem from './NotificationItem';
 
-describe("<Notifications />", () => {
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
+describe('NotificationItem Component', () => {
 
-  it("NotificationItem renders without crashing", () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<NotificationItem />);
+    });
+
+    it("Renders without crashing", ()=> {
+        expect(wrapper).toBeDefined();
+    });
+
+    it("<NotificationItem />  renders correct html by passing dummy type and value", () => {
+        wrapper = shallow(<NotificationItem type="default" value="test" />);
+        expect(wrapper.find("li").text()).toBe("test");
+        expect(wrapper.find("li").prop("data-notification-type")).toBe("default");
+      });
+    
+      it("<NotificationItem />  renders the correct html by passing a dummy html", () => {
+        wrapper = shallow(<NotificationItem html="<u>test</u>" />);
+        expect(wrapper.find("li").html()).toBe("<li><u>test</u></li>");
+      });
+});
+
+describe("Testing markAsRead method in the notification class Component", () => {
+  it("Check that when calling the function markAsRead on an instance of the component, the spy is being called with the right message", () => {
+    const listNotifications = [
+      {id: 1, value: "New course available", type: "default"},
+      {id: 2, value: "New resume available", type: "urgent"},
+      {id: 3, html: {__html: getLatestNotification()}, type: "urgent"},
+    ];
+    console.log = jest.fn();
+    const wrapper = mount(<Notifications displayDrawer={true} listNotifications={listNotifications}/>);
+    const mock = jest.spyOn(console, 'log');
+    const noti = wrapper.find('li').first();
+    noti.simulate('click');
+    expect(mock).toBeCalledWith("Notification 1 has been marked as read");
+    mock.mockRestore();
+  });
+});
+
+describe('onclick event behaves well', () => {
+  it('should call console.log', () => {
     const wrapper = shallow(<NotificationItem />);
-    expect(wrapper.exists()).toEqual(true);
-  });
-  it("Verify that by passing dummy type and value props, it renders the correct html", () => {
-    const wrapper = shallow(<NotificationItem type="default" value="test" />);
-    wrapper.update();
-    const listItem = wrapper.find("li");
+    const spy = jest.fn();
 
-    expect(listItem).toHaveLength(1);
-    expect(listItem.text()).toEqual("test");
-    expect(listItem.prop("data-notification-type")).toEqual("default");
-  });
-  it("Passing a dummy html prop, it renders the correct html (for example", () => {
-    const text = "Here is the list of notifications";
-    const wrapper = shallow(
-      <NotificationItem html={{ __html: "<u>test</u>" }} />
-    );
-    wrapper.update();
-    const listItem = wrapper.find("li");
-    // expect(listItem.html()).toEqual(
-    //   '<li data-notification-type="default"><u>test</u></li>'
-    // );
+    wrapper.setProps({value: 'test item', markAsRead: spy, id:1});
+    wrapper.find('li').props().onClick();
+    expect(spy).toBeCalledTimes(1);
+    expect(spy).toBeCalledWith(1);
+    spy.mockRestore();
 
-    expect(listItem.props()["data-notification-type"]).toEqual("default");
-    expect(listItem.html()).toContain("<u>test</u>");
-  });
-  it("when calling the function markAsRead on an instance of the component, the spy is being called with the right message", () => {
-    const id = 27;
-
-    const wrapper = shallow(
-      <NotificationItem type="default" value="test" id={id} />
-    );
-
-    const instance = wrapper;
-
-    instance.markAsRead = jest.fn();
-
-    const listItem = wrapper.find("li").first();
-
-    listItem.simulate("click");
-
-    instance.markAsRead(id);
-
-    expect(instance.markAsRead).toHaveBeenCalledWith(27);
-    jest.restoreAllMocks();
   });
 });

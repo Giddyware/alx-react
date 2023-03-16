@@ -1,9 +1,31 @@
-import React from 'react';
+import React from "react";
 import { shallow } from 'enzyme';
 import App from './App';
 
-const wrapper = shallow(<App />);
+describe('App Component', () => {
 
-it('renders without crashing', () => {
-  shallow(<App />);
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<App />);
+    });
+
+    it("Renders without crashing", ()=> {
+        expect(wrapper).toBeDefined();
+    });
+
+    it("Renders an Notifications", ()=> {
+        expect(wrapper.find('Notifications')).toHaveLength(1);
+    });
+
+    it("Renders an Header", ()=> {
+        expect(wrapper.find('Header')).toHaveLength(1);
+    });
+
+    it("Renders an Login", ()=> {
+        expect(wrapper.find('Login')).toHaveLength(1);
+    });
+
+    it("Renders an Login", ()=> {
+        expect(wrapper.find('Login')).toHaveLength(1);
+    });
 });

@@ -1,8 +1,6 @@
 .Notifications {
-	border: 3px dotted var(--holberton-red);
-	padding: 6px 12px;
-	position: relative;
-	margin-top: 12px;
+    padding: 5em;
+    border: 2px dashed red;
 }
 
 li[data-priority="default"] {
@@ -10,7 +8,7 @@ li[data-priority="default"] {
 }
 
 li[data-priority="urgent"] {
-	color: var(--holberton-red);
+	color: red;
 }
 
 li[data-notification-type="default"] {
@@ -18,5 +16,4 @@ li[data-notification-type="default"] {
 }
 
 li[data-notification-type="urgent"] {
-	color: var(--holberton-red);
-}
+	color: red;}

@@ -3,13 +3,8 @@ import { mount } from 'enzyme';
 import { jest } from '@jest/globals';
 import WithLogging from "./WithLogging";
 import Login from '../Login/Login';
-import { StyleSheetTestUtils } from 'aphrodite';
 
-describe("Testing WithLogging HOC", () => {
-  beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-
+describe("Testing HOC WithLogging", () => {
   it("should make sure console.log was called on mount and on unmount with Component when the wrapped element is pure html", () => {
     console.log = jest.fn();
     const Hoc = WithLogging(() => <p>Hello there</p>);
