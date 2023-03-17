@@ -1,100 +1,96 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import Header from '../Header/Header';
-import Footer from  '../Footer/Footer';
 import Login from '../Login/Login';
-import Notification from '../Notifications/Notifications';
+import Footer from '../Footer/Footer';
+import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import { getLatestNotification } from '../utils/utils';
 import PropTypes from 'prop-types';
-import { StyleSheet, css} from 'aphrodite';
+import { getLatestNotification } from '../utils/utils';
+import { StyleSheet, css } from 'aphrodite';
 
-
-class App extends React.Component {
-
+class App extends Component {
   constructor(props) {
     super(props);
-    this.isLoggedIn = props.isLoggedIn;
-    this.logOut = props.logOut;
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.listCourses = [
-      {id: 1, name: 'ES6', credit: 60},
-      {id: 2, name: 'Webpack', credit: 20},
-      {id: 3, name: 'React', credit: 40},
-    ];
-  
-    this.listNotifications = [
-      {id: 1, value: "New course available", type: "default"},
-      {id: 2, value: "New resume available", type: "urgent"},
-      {id: 3, html: {__html: getLatestNotification()}, type: "urgent"},
-    ];
+    this.handleLogout = this.handleLogout.bind(this);
   }
-
-  handleKeyDown(e) {
-    if(e.ctrlKey && e.key === 'h') {
-    e.preventDefault();
-    alert("Logging you out");
-      this.logOut();
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleLogout);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleLogout);
+  }
+  handleLogout(e) {
+    if (e.ctrlKey && e.key === 'h') {
+      e.preventDefault();
+      alert('Logging you out');
+      this.props.logOut();
     }
   }
-
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
   render() {
+    const listCourses = [
+      { id: 1, name: 'ES6', credit: 60 },
+      { id: 2, name: 'Webpack', credit: 20 },
+      { id: 3, name: 'React', credit: 40 },
+    ];
+    const listNotifications = [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+      { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
+    ];
+    const { isLoggedIn } = this.props;
     return (
-    <React.Fragment>
-      <Notification listNotifications={this.listNotifications} />
-    <div className={css(bodyStyles.App)}>
-      <Header />
-      {this.props.isLoggedIn ? 
-      <BodySectionWithMarginBottom title='Course list'><CourseList  listCourses={this.listCourses}/></BodySectionWithMarginBottom>
-      :
-      <BodySectionWithMarginBottom title='Log in to continue'><Login /></BodySectionWithMarginBottom>
-      }
-      <BodySection title='News from the School'>
-        <p>Random text for school news</p>
-      </BodySection>
-      <div className={css(footerStyles.footer)}>
-      <Footer /> 
-      </div>
-    </div>
-    </React.Fragment>
-  );}
+      <Fragment>
+        <Notifications listNotifications={listNotifications} />
+        <Header />
+        {isLoggedIn ? (
+          <BodySectionWithMarginBottom title='Course list'>
+            <CourseList listCourses={listCourses} />
+          </BodySectionWithMarginBottom>
+        ) : (
+          <BodySectionWithMarginBottom title='Log in to continue'>
+            <Login />
+          </BodySectionWithMarginBottom>
+        )}
+        <BodySection title='News from the School'>
+          <p className={css(styles.p)}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto,
+            ullam? Quisquam eos temporibus, voluptate error, sunt consectetur
+            ducimus eaque dolorum sit excepturi doloribus officiis reprehenderit
+            distinctio dignissimos adipisci a aspernatur.
+          </p>
+        </BodySection>
+        <div className={css(styles.footer)}>
+          <Footer />
+        </div>
+      </Fragment>
+    );
+  }
 }
-
-const bodyStyles = StyleSheet.create({
-  App: {
-
-  padding: '1em',
-  position: 'relative',
-  minHeight: '100vh',
-  }
-});
-
-const footerStyles = StyleSheet.create({
-  footer: {
-    borderTop: '1px solid red',
-    fontStyle: 'italic',
-    textAlign: 'center',
-  }
-})
 
 App.defaultProps = {
   isLoggedIn: false,
-  logOut: () => {}
+  logOut: () => undefined,
 };
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func
+  logOut: PropTypes.func,
 };
 
-export default App;
+const styles = StyleSheet.create({
+  footer: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    borderTop: 'thick solid #e0344a',
+  },
+  p: {
+    marginTop: 0,
+  },
+});
 
+export default App;

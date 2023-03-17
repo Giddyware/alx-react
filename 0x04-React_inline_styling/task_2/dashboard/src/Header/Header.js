@@ -3,31 +3,29 @@ import logo from '../assets/holberton-logo.jpg';
 import { StyleSheet, css } from 'aphrodite';
 
 function Header() {
-  return(
-    <div className={css(headerStyles.appHeader)}>
-        <img src={logo} className={css(headerStyles.appLogo)} alt="logo" />
-        <h1 className={css(headerStyles.h1)}> School dashboard</h1>
-    </div>
+  return (
+    <header className={css(styles.header)}>
+      <img className={css(styles.logo)} src={logo} alt='logo' />
+      <h1 className={css(styles.title)}>School dashboard</h1>
+    </header>
   );
 }
 
-const headerStyles = StyleSheet.create({
-  appHeader: {
+const styles = StyleSheet.create({
+  header: {
     display: 'flex',
-    padding: '3em',
+    color: '#e0344a',
+    alignItems: 'center',
+    borderBottom: 'thick solid #e0344a',
+    width: '100%',
+    position: 'fixed',
   },
-
-  appLogo: {
-    height: '20vmin',
-    pointerEvents: 'none',
-    display: 'flex',
+  logo: {
+    width: '144px',
   },
-
-  h1: {
-    color: 'red',
-    display: 'flex',
-    paddingTop: '2em',
-  }
-})
+  title: {
+    margin: 0,
+  },
+});
 
 export default Header;

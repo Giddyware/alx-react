@@ -1,20 +1,16 @@
-.App-header h1{
-    color: red;
-    /* float: right; */
-    /* padding-right: 80px; */
-    display: flex;
-    padding-top: 2em;
-  }
+.header {
+  display: flex;
+  color: #e0344a;
+  align-items: center;
+  border-bottom: thick solid #e0344a;
+  width: 100%;
+  position: fixed;
+}
 
-  .App-logo {
-    height: 20vmin;
-    pointer-events: none;
-    display: flex;
-  }
+.header img {
+  width: 144px;
+}
 
-  .App-header {
-    display: flex;
-    padding: 3em;
-   
-  }
-  
+.header h1 {
+  margin: 0;
+}

@@ -3,48 +3,53 @@ import { StyleSheet, css } from 'aphrodite';
 
 function Login() {
   return (
-    <React.Fragment>
-        <div className={css(loginStyles.appBody)}> 
-          <p>Login to access the full dashboard</p><br></br><br></br> <br></br>
-          <label htmlFor="email">Email: </label> 
-          <input name="email" type="email" id="email" className={css(loginStyles.inputs)}></input>
-          <label htmlFor="password">Password: </label>
-          <input name="password" type="password" id="password" className={css(loginStyles.inputs)}></input>
-          <button className={css(loginStyles.button)}>OK</button>
-        </div>
-     
-    </React.Fragment>
+    <main role='main' className={css(styles.login)}>
+      <p>Login to access the full dashboard</p>
+      <label htmlFor='email'>Email:</label>
+      <input className={css(styles.inp)} type='email' name='email' id='email' />
+      <label htmlFor='password'>Password:</label>
+      <input
+        className={css(styles.inp)}
+        type='password'
+        name='password'
+        id='password'
+      />
+      <button className={css(styles.btn)} type='button'>
+        OK
+      </button>
+    </main>
   );
-
 }
 
-const loginStyles = StyleSheet.create(
-  {
-    appBody: {
-    borderTop: '4px solid red',
-    paddingTop: '20px',
-    marginTop: '-3em',
-    '@media (max-width: 900px)': {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems:'space-between'
-    }
+const screenSize = {
+  small: '@media screen and (max-width: 900px)',
+};
+
+const styles = StyleSheet.create({
+  login: {
+    padding: '16px 24px',
+    [screenSize.small]: {
+      width: '90%',
+      padding: 0,
     },
-
-  inputs: {
-    margin: '0 16px 0 8px',
-    '@media (max-width: 900px)': {
-      display: 'none'
-    }
-},
-button: {
-  '@media (max-width: 900px)': {
-    width: '40px',
-    backgroundColor: 'white',
-    border: '2px solid orange'
-  }
-}
-  
-}); 
+  },
+  inp: {
+    margin: '4px',
+    [screenSize.small]: {
+      display: 'block',
+      border: 'none',
+      margin: 0,
+    },
+  },
+  btn: {
+    margin: '4px',
+    cursor: 'pointer',
+    [screenSize.small]: {
+      width: '32px',
+      display: 'block',
+      margin: 0,
+    },
+  },
+});
 
 export default Login;

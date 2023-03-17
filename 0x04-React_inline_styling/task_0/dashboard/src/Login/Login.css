@@ -1,20 +1,10 @@
-
-
-.App-body{
-  border-top: 4px solid red;
-
-  padding-top: 20px;
-  margin-top: -5em;
+.login {
+  padding: 16px 24px;
 }
-
-  .App-body p{
-    float: left;
-    /* margin-right: 900px; */
-  }
-  
-
-
-  .App-body input {
-    margin: 0 16px 0 8px;
+.login input,
+.login button {
+  margin: 4px;
 }
-  
+.login button {
+  cursor: pointer;
+}
